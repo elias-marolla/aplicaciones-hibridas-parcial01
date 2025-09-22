@@ -27,11 +27,20 @@ const getCategoriaById = async (req, res) => {
 const postCategoria = async (req, res) => {
     try {
         const { nombre, descripcion } = req.body;
+        if( !nombre || !descripcion ) {
+            return res.status(400).json({ message: "Se requiere el nombre y la descripción" });
+        }
+
+        const categoriaData = await CategoriaModel.findOne({ nombre });
+        if (categoriaData) {
+            return res.status(400).json({ message: "La categoría ya existe" });
+        }
         const categoria = new CategoriaModel({ nombre, descripcion });
         await categoria.save();
         res.status(201).json({ message: "Categoría creada correctamente", data: categoria });
     } catch (error) {
         res.status(500).json({ message: "Error al crear categoría" });
+        console.error(error);
     }
 };
 

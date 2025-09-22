@@ -14,7 +14,7 @@ db.on('error', ()=>{console.error('no se genero la conexion con la base de datos
 db.once('open', () => {console.info('se establecio la conexion con la base de datos.')});
 
 const app = express();
-app.use( express.json() );
+app.use(express.json());
 routerApi(app);
 
 app.listen (PORT, ()=>{

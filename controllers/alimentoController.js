@@ -27,7 +27,18 @@ const getAlimentoById = async (req, res) => {
 //Crear un nuevo alimento
 const postAlimento = async (req, res) => {
     try {
-        const alimento = new AlimentoModel(req.body);
+        const { nombre, calorias, proteinas, carbohidratos, grasas, descripcion } = req.body; 
+        if( !nombre || !calorias || !proteinas || !carbohidratos || !grasas || !descripcion ) {
+            return res.status(400).json({ message: "Todos los campos son obligatorios" });
+        }
+
+        const alimentoData = await AlimentoModel.findOne({nombre});
+
+        if( alimentoData){
+            res.status(400).json({ msg: 'El nombre seleccionado  ya existe' });
+            return;
+        }
+        const alimento = new AlimentoModel({ nombre, calorias, proteinas, carbohidratos, grasas, descripcion });
         await alimento.save();
         res.status(201).json({ message: "Alimento creado correctamente" });
     } catch (error) {
