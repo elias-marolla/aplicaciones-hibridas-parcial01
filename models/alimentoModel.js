@@ -10,10 +10,6 @@ const alimentoSchema = new Schema(
     carbohidratos: { type: Number },   
     grasas: { type: Number },          
     descripcion: { type: String },
-    categoria: {
-      type: Schema.Types.ObjectId,   // almacena el id de la categoría
-      ref: "Categoria",          
-    }
   },
   { timestamps: true }
 );
