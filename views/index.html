@@ -3,27 +3,266 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>API Nutrición - Contador de Calorías</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <title>API Nutrición - Documentación</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h1>🥗 API RESTful de Nutrición</h1>
-  <p>Bienvenido a la API para gestionar alimentos, categorías y valores nutricionales (calorías, proteínas, grasas, carbohidratos y vitaminas).</p>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="bg-green-600 text-white py-8">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <h1 class="text-4xl font-bold mb-2">API RESTful de Nutrición</h1>
+      <p class="text-green-100 text-lg">Gestión de alimentos, categorías y valores nutricionales</p>
+    </div>
+  </header>
 
-  <h2>📌 Endpoints principales</h2>
-  <ul>
-    <li><a href="/api/alimentos">/api/alimentos</a> → Ver todos los alimentos</li>
-    <li><a href="/api/alimentos/search?nombre=Pollo">/api/alimentos/search?nombre=pollo</a> → Buscar alimento por nombre</li>
-    <li><a href="/api/alimentos/filter?minProteinas=20&maxCalorias=300">/api/alimentos/filter</a> → Filtrar alimentos</li>
-    <li><a href="/api/categorias">/api/categorias</a> → Ver categorías</li>
-    <li><a href="/api/users">/api/users</a> → Ver usuarios</li>
-  </ul>
+  <main class="container mx-auto px-4 max-w-4xl py-8">    
+    <!-- Descripción -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">¿De qué trata esta API?</h2>
+      <p class="text-gray-600 mb-6">A continuación explico de qué trata esta API y cómo funciona. Si querés podés pasar directamente a la parte de los <a href="#endpoints" class="text-green-600 hover:text-green-800 underline">endpoints</a>.</p>
 
-  <footer>
-    <p>👤 Alumnos: Asensio Diego, Diaz Sol, Marolla Elias</p>
-    <p>📘 Materia: Aplicaciones Híbridas 2</p>
-    <p>👨‍🏫 Docente: Jonathan Emanuel Cruz</p>
-    <p>🆔 Comisión: DWN4AV</p>
+      <div class="ml-8">
+        <h3 class="text-2xl font-semibold text-gray-700 mb-3 mt-6">Breve Descripción</h3>
+        <p class="text-gray-600 mb-4">
+          Esta API REST permite trabajar con información nutricional de alimentos, categorías y usuarios.
+          Su objetivo es ofrecer datos estructurados (calorías, proteínas, carbohidratos, grasas)
+          para que desarrolladores, nutricionistas o aplicaciones de salud puedan gestionar información nutricional.
+        </p>
+
+        <h3 class="text-2xl font-semibold text-gray-700 mb-3 mt-6">¿Qué ofrece la API?</h3>
+        <ul class="list-disc ml-8 text-gray-600 space-y-1">
+          <li>Gestión completa de usuarios</li>
+          <li>Catálogo de alimentos con información nutricional detallada</li>
+          <li>Sistema de categorías para organizar alimentos</li>
+          <li>Operaciones CRUD completas para todos los recursos</li>
+          <li>Búsqueda y filtrado de alimentos</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Endpoints -->
+    <section id="endpoints" class="mb-12">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6">Endpoints</h2>
+
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <table class="w-full">
+          <!-- Usuarios -->
+          <thead>
+            <tr class="bg-gray-100">
+              <th colspan="3" class="text-left py-4 px-6 text-lg font-semibold text-gray-700">👤 Usuarios</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-6 w-20">
+                <span class="pill pill--cyan">GET</span>
+              </td>
+              <td class="py-3 px-6">
+                <a href="/api/users" class="text-green-600 hover:text-green-800 hover:underline font-mono">/api/users</a>
+              </td>
+              <td class="py-3 px-6 text-gray-500 text-sm">Obtener todos los usuarios</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-6">
+                <span class="pill pill--green">POST</span>
+              </td>
+              <td class="py-3 px-6">
+                <a href="/api/users" class="text-green-600 hover:text-green-800 hover:underline font-mono">/api/users</a>
+              </td>
+              <td class="py-3 px-6">
+                <details class="text-sm">
+                  <summary class="cursor-pointer text-gray-600 hover:text-gray-800">Ver body requerido</summary>
+                  <pre class="mt-2 p-3 bg-gray-50 rounded text-xs overflow-x-auto">{
+  "name": "String (required)", 
+  "email": "String (required)", 
+  "password": "String (required)"
+}</pre>
+                </details>
+              </td>
+            </tr>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-6 w-20">
+                <span class="pill pill--cyan">DELETE</span>
+              </td>
+              <td class="py-3 px-6">
+                <a href="/api/users/:id" class="text-green-600 hover:text-green-800 hover:underline font-mono">/api/users/:id</a>
+              </td>
+              <td class="py-3 px-6 text-gray-500 text-sm">Eliminar usuario por ID</td>
+            </tr>
+          </tbody>
+
+          <!-- Alimentos -->
+          <thead>
+            <tr class="bg-gray-100">
+              <th colspan="3" class="text-left py-4 px-6 text-lg font-semibold text-gray-700">🥗 Alimentos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-6">
+                <span class="pill pill--cyan">GET</span>
+              </td>
+              <td class="py-3 px-6">
+                <a href="/api/alimentos" class="text-green-600 hover:text-green-800 hover:underline font-mono">/api/alimentos</a>
+              </td>
+              <td class="py-3 px-6 text-gray-500 text-sm">Obtener todos los alimentos</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-6">
+                <span class="pill pill--cyan">GET</span>
+              </td>
+              <td class="py-3 px-6">
+                <a href="/api/alimentos/1" class="text-green-600 hover:text-green-800 hover:underline font-mono">/api/alimentos/:id</a>
+              </td>
+              <td class="py-3 px-6 text-gray-500 text-sm">Obtener alimento por ID</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-6">
+                <span class="pill pill--green">POST</span>
+              </td>
+              <td class="py-3 px-6">
+                <a href="/api/alimentos" class="text-green-600 hover:text-green-800 hover:underline font-mono">/api/alimentos</a>
+              </td>
+              <td class="py-3 px-6">
+                <details class="text-sm">
+                  <summary class="cursor-pointer text-gray-600 hover:text-gray-800">Ver body requerido</summary>
+                  <pre class="mt-2 p-3 bg-gray-50 rounded text-xs overflow-x-auto">{
+  "nombre": "String (required)", 
+  "calorias": "Number (required)", 
+  "proteinas": "Number (required)",
+  "carbohidratos": "Number (required)",
+  "grasas": "Number (required)",
+  "descripcion": "String (required)"
+}</pre>
+                </details>
+              </td>
+            </tr>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-6">
+                <span class="pill pill--violet">PUT</span>
+              </td>
+              <td class="py-3 px-6">
+                <a href="/api/alimentos/1" class="text-green-600 hover:text-green-800 hover:underline font-mono">/api/alimentos/:id</a>
+              </td>
+              <td class="py-3 px-6 text-gray-500 text-sm">Todos los campos del POST son editables</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-6">
+                <span class="pill pill--red">DELETE</span>
+              </td>
+              <td class="py-3 px-6">
+                <a href="/api/alimentos/1" class="text-green-600 hover:text-green-800 hover:underline font-mono">/api/alimentos/:id</a>
+              </td>
+              <td class="py-3 px-6 text-gray-500 text-sm">Eliminar alimento por ID</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-6">
+                <span class="pill pill--cyan">GET</span>
+              </td>
+              <td class="py-3 px-6">
+                <a href="/api/alimentos/search?nombre=Pollo" class="text-green-600 hover:text-green-800 hover:underline font-mono">/api/alimentos/search?nombre=Pollo</a>
+              </td>
+              <td class="py-3 px-6 text-gray-500 text-sm">Obtener alimentos por nombre</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-6">
+                <span class="pill pill--cyan">GET</span>
+              </td>
+              <td class="py-3 px-6">
+                <a href="/api/alimentos/filter?minProteinas=20&maxCalorias=300" class="text-green-600 hover:text-green-800 hover:underline font-mono">/api/alimentos/filter?minProteinas=20&maxCalorias=300</a>
+              </td>
+              <td class="py-3 px-6 text-gray-500 text-sm">Filtrar alimentos por Proteinas y Calorias</td>
+            </tr>
+          </tbody>
+
+          <!-- Categorías -->
+          <thead>
+            <tr class="bg-gray-100">
+              <th colspan="3" class="text-left py-4 px-6 text-lg font-semibold text-gray-700">📂 Categorías</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-6">
+                <span class="pill pill--cyan">GET</span>
+              </td>
+              <td class="py-3 px-6">
+                <a href="/api/categorias" class="text-green-600 hover:text-green-800 hover:underline font-mono">/api/categorias</a>
+              </td>
+              <td class="py-3 px-6 text-gray-500 text-sm">Obtener todas las categorías</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-6">
+                <span class="pill pill--cyan">GET</span>
+              </td>
+              <td class="py-3 px-6">
+                <a href="/api/categorias/1" class="text-green-600 hover:text-green-800 hover:underline font-mono">/api/categorias/:id</a>
+              </td>
+              <td class="py-3 px-6 text-gray-500 text-sm">Obtener categoría por ID</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-6">
+                <span class="pill pill--green">POST</span>
+              </td>
+              <td class="py-3 px-6">
+                <a href="/api/categorias" class="text-green-600 hover:text-green-800 hover:underline font-mono">/api/categorias</a>
+              </td>
+              <td class="py-3 px-6">
+                <details class="text-sm">
+                  <summary class="cursor-pointer text-gray-600 hover:text-gray-800">Ver body requerido</summary>
+                  <pre class="mt-2 p-3 bg-gray-50 rounded text-xs overflow-x-auto">{
+  "nombre": "String (required)", 
+  "descripcion": "String (required)"
+}</pre>
+                </details>
+              </td>
+            </tr>
+            <tr class="border-b border-gray-200">
+              <td class="py-3 px-6">
+                <span class="pill pill--violet">PUT</span>
+              </td>
+              <td class="py-3 px-6">
+                <a href="/api/categorias/1" class="text-green-600 hover:text-green-800 hover:underline font-mono">/api/categorias/:id</a>
+              </td>
+              <td class="py-3 px-6 text-gray-500 text-sm">Todos los campos del POST son editables</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-6">
+                <span class="pill pill--red">DELETE</span>
+              </td>
+              <td class="py-3 px-6">
+                <a href="/api/categorias/1" class="text-green-600 hover:text-green-800 hover:underline font-mono">/api/categorias/:id</a>
+              </td>
+              <td class="py-3 px-6 text-gray-500 text-sm">Eliminar categoría por ID</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8 mt-16">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <div class="grid md:grid-cols-4 gap-4 text-center md:text-left">
+        <div class="md:border-r border-gray-600 md:pr-4">
+          <p class="text-sm text-gray-300">Alumnos</p>
+          <p class="font-semibold">Asensio Diego, Diaz Diaz Sol, Marolla Elias</p>
+        </div>
+        <div class="md:border-r border-gray-600 md:px-4">
+          <p class="text-sm text-gray-300">Materia</p>
+          <p class="font-semibold">Aplicaciones Híbridas 2</p>
+        </div>
+        <div class="md:border-r border-gray-600 md:px-4">
+          <p class="text-sm text-gray-300">Profesor</p>
+          <p class="font-semibold">Jonathan Emanuel Cruz</p>
+        </div>
+        <div class="md:pl-4">
+          <p class="text-sm text-gray-300">Comisión</p>
+          <p class="font-semibold">DWN4AV</p>
+        </div>
+      </div>
+    </div>
   </footer>
 </body>
 </html>

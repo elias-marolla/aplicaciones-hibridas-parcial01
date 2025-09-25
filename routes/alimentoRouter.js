@@ -4,10 +4,15 @@ import {
     getAlimentoById,
     postAlimento,
     putAlimento,
-    deleteAlimento
+    deleteAlimento,
+    searchAlimentos,
+    filterAlimentos
 } from "../controllers/alimentoController.js";
 
 const router = express.Router();
+
+router.get("/search", searchAlimentos);
+router.get("/filter", filterAlimentos);
 
 router.get("/", getAlimentos);
 router.get("/:id", getAlimentoById);
