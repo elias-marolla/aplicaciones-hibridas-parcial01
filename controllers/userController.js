@@ -1,9 +1,10 @@
 import UserModel from "../models/userModel.js";
+import bcrypt from "bcrypt";
 
 // Obtener todos los usuarios
 const getUsers = async (req, res) => {
     try {
-        const users = await UserModel.find();
+        const users = await UserModel.find().select('-password'); 
         res.status(200).json({ message: "Usuarios encontrados.", data: users });
     } catch (error) {
         res.status(500).json({ message: "No se pudo obtener usuarios." });
@@ -13,7 +14,7 @@ const getUsers = async (req, res) => {
 // Obtener un usuario por ID
 const getUserById = async (req, res) => {
     try {
-        const user = await UserModel.findById(req.params.id);
+        const user = await UserModel.findById(req.params.id).select('-password');
         if (!user) {
             return res.status(404).json({ message: "Usuario no encontrado" });
         }
@@ -29,20 +30,43 @@ const postUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
         
-        // Validaciones básicas
         if (!name || !email || !password) {
             return res.status(400).json({ message: "Todos los campos son obligatorios" });
         }
 
-        // Verificar si el email ya existe
+        if (password.length < 6) {
+            return res.status(400).json({ message: "La contraseña debe tener al menos 6 caracteres" });
+        }
+
         const existingUser = await UserModel.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: "El email ya está registrado" });
         }
+        
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        const user = new UserModel({ name, email, password });
+        const user = new UserModel({ 
+            name, 
+            email, 
+            password: hashedPassword 
+        });
+        
         await user.save();
-        res.status(201).json({ message: "Usuario creado correctamente", data: user });
+        
+        // Responder sin incluir la contraseña hasheada
+        const userResponse = {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt
+        };
+        
+        res.status(201).json({ 
+            message: "Usuario creado correctamente", 
+            data: userResponse 
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "No se pudo generar el nuevo usuario." });
@@ -53,12 +77,28 @@ const postUser = async (req, res) => {
 const putUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const updated = await UserModel.findByIdAndUpdate(id, req.body, { new: true });
+        const updateData = { ...req.body };
+
+        // Hashear contraseña si se está actualizando
+        if (updateData.password) {
+            if (updateData.password.length < 6) {
+                return res.status(400).json({ message: "La contraseña debe tener al menos 6 caracteres" });
+            }
+            const saltRounds = 10;
+            updateData.password = await bcrypt.hash(updateData.password, saltRounds);
+        }
+
+        const updated = await UserModel.findByIdAndUpdate(id, updateData, { 
+            new: true 
+        }).select('-password');
+        
         if (!updated) {
             return res.status(404).json({ message: "Usuario no encontrado" });
         }
+        
         res.status(200).json({ message: "Usuario actualizado", data: updated });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: "Error al actualizar usuario" });
     }
 };
@@ -77,4 +117,14 @@ const deleteUser = async (req, res) => {
     }
 };
 
-export { getUsers, getUserById, postUser, putUser, deleteUser };
+// Función para verificar contraseña
+const verifyPassword = async (plainPassword, hashedPassword) => {
+    try {
+        return await bcrypt.compare(plainPassword, hashedPassword);
+    } catch (error) {
+        console.error('Error al verificar contraseña:', error);
+        return false;
+    }
+};
+
+export { getUsers, getUserById, postUser, putUser, deleteUser, verifyPassword };
