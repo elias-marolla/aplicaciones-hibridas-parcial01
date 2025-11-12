@@ -1,25 +1,23 @@
 {
-  "name": "aplicaciones-hibridas-parcial01",
-  "version": "1.0.0",
+  "name": "nutricion-api-backend",
+  "version": "2.0.0",
   "description": "parcial de Aplicaciones Hibridas - Api RESTful",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node --watch index.js",
+    "start": "node index.js",
+    "dev": "node --watch index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/elias-marolla/aplicaciones-hibridas-parcial01.git"
   },
-  "author": "Elias Marolla",
+  "author": "Asensio Diego, Diaz Diaz Sol, Marolla Elias",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/elias-marolla/aplicaciones-hibridas-parcial01/issues"
-  },
-  "homepage": "https://github.com/elias-marolla/aplicaciones-hibridas-parcial01#readme",
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
