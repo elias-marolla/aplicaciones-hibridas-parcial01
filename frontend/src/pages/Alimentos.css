@@ -1,0 +1,157 @@
+.alimentos-container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+.page-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 30px;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+.page-header h1 {
+	color: #333;
+	font-size: 32px;
+	margin: 0;
+}
+
+.form-card {
+	background: white;
+	padding: 30px;
+	border-radius: 10px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	margin-bottom: 30px;
+}
+
+.form-card h3 {
+	color: #333;
+	margin-bottom: 20px;
+}
+
+.form-row {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 15px;
+	margin-bottom: 15px;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+}
+
+.form-group label {
+	margin-bottom: 5px;
+	color: #555;
+	font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+	outline: none;
+	border-color: #4caf50;
+}
+
+.form-group textarea {
+	resize: vertical;
+	min-height: 80px;
+}
+
+.form-buttons {
+	display: flex;
+	gap: 10px;
+	margin-top: 20px;
+}
+
+.alimentos-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 20px;
+}
+
+.alimento-card {
+	background: white;
+	border-radius: 10px;
+	padding: 20px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.alimento-card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.alimento-card h3 {
+	color: #333;
+	margin-bottom: 10px;
+	font-size: 20px;
+}
+
+.alimento-card .description {
+	color: #666;
+	margin-bottom: 15px;
+	line-height: 1.5;
+	min-height: 40px;
+}
+
+.nutrition-info {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 10px;
+	margin-bottom: 15px;
+	padding: 15px;
+	background: #f8f9fa;
+	border-radius: 8px;
+}
+
+.nutrition-info span {
+	font-size: 14px;
+	color: #555;
+}
+
+.card-actions {
+	display: flex;
+	gap: 10px;
+	justify-content: flex-end;
+}
+
+.btn-edit,
+.btn-delete {
+	padding: 8px 16px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	transition: all 0.3s;
+}
+
+.btn-edit {
+	background: #2196f3;
+	color: white;
+}
+
+.btn-edit:hover {
+	background: #1976d2;
+}
+
+.btn-delete {
+	background: #f44336;
+	color: white;
+}
+
+.btn-delete:hover {
+	background: #d32f2f;
+}

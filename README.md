@@ -1,264 +1,332 @@
-# Aplicaciones Híbridas - Parcial 01
+# 🥗 Nutrición App - Aplicaciones Híbridas Parcial 02
 
-API RESTful de Nutrición desarrollada con Node.js, Express y MongoDB
+Aplicación fullstack MERN (MongoDB, Express, React, Node.js) para gestión de información nutricional de alimentos.
+
+## 👥 Equipo de Desarrollo
+
+- **Asensio Diego**
+- **Diaz Diaz Sol**
+- **Marolla Elias**
+
+### 👨‍🏫 Información Académica
+
+- **Docente:** Cruz Jonathan Emanuel
+- **Materia:** Aplicaciones Híbridas 2
+- **Comisión:** DDWN4AV
+- **Parcial:** 02 - Proyecto FullStack
+
+---
 
 ## 📋 Descripción del Proyecto
 
-Esta API REST permite gestionar información nutricional de alimentos, categorías y usuarios. Está diseñada para proporcionar datos estructurados sobre valores nutricionales (calorías, proteínas, carbohidratos, grasas) que pueden ser utilizados por desarrolladores, nutricionistas o aplicaciones de salud.
+Sistema completo de gestión nutricional que permite a los usuarios:
 
-### ✨ Características principales
+- 🔐 Registrarse y autenticarse de forma segura con JWT
+- 🥗 Crear, editar y eliminar alimentos con información nutricional detallada
+- 📂 Organizar alimentos en categorías personalizadas
+- 🔍 Buscar y filtrar alimentos por valores nutricionales
+- 👤 Gestionar su perfil de usuario
 
-- 🔐 **Sistema de usuarios** con contraseñas hasheadas (bcrypt)
-- 🥗 **Gestión de alimentos** con información nutricional completa
-- 📂 **Sistema de categorías** para organizar alimentos
-- 🔍 **Búsqueda y filtrado** avanzado de alimentos
-- 📊 **Operaciones CRUD** completas para todos los recursos
-- 🛡️ **Validaciones** de datos y manejo de errores
-- 📚 **Documentación visual** integrada
-
-## 👥 Integrantes del Equipo
-
-- **Asensio Diego**
-- **Diaz Sol**
-- **Marolla Elias**
-
-## 👨‍🏫 Información Académica
-
-- **Docente:** Cruz Jonathan Emanuel
-- **Materia:** Aplicaciones Híbridas
-- **Comisión:** DDWN4AV
+---
 
 ## 🚀 Tecnologías Utilizadas
 
-- **Node.js** - Entorno de ejecución
-- **Express** - Framework web
+### Backend
+
+- **Node.js** v18+ - Entorno de ejecución
+- **Express.js** - Framework web para API REST
 - **MongoDB** - Base de datos NoSQL
 - **Mongoose** - ODM para MongoDB
-- **bcrypt** - Hasheo de contraseñas
-- **dotenv** - Variables de entorno
-- **jsonwebtoken** - Tokens JWT (preparado para autenticación)
+- **JWT** - Autenticación mediante tokens
+- **bcrypt** - Encriptación de contraseñas
+- **CORS** - Habilitar comunicación frontend-backend
+
+### Frontend
+
+- **React.js** v18+ - Biblioteca de UI
+- **React Router** - Enrutamiento de páginas
+- **Context API** - Manejo de estado global
+- **Axios** - Cliente HTTP para consumir API
+- **CSS3** - Estilos personalizados
+
+---
 
 ## 📦 Instalación y Configuración
 
 ### Prerrequisitos
 
-- Node.js (versión 14 o superior)
-- MongoDB (local o Atlas)
+Antes de comenzar, asegúrate de tener instalado:
+
+- Node.js (v18 o superior)
+- MongoDB Atlas account (o MongoDB local)
 - npm o yarn
+- Git
 
-### Pasos de instalación
-
-1. **Clonar el repositorio**
+### 1️⃣ Clonar el Repositorio
 
 ```bash
 git clone https://github.com/elias-marolla/aplicaciones-hibridas-parcial01.git
 cd aplicaciones-hibridas-parcial01
 ```
 
-2. **Instalar dependencias**
+### 2️⃣ Configurar el Backend
 
 ```bash
+# Ir a la carpeta del backend
+cd backend
+
+# Instalar dependencias
 npm install
+
+# Crear archivo .env (ver sección de variables de entorno)
+# Archivo .env ya está incluido en la entrega
 ```
 
-3. **Configurar variables de entorno**
-   Crear un archivo `.env` en la raíz del proyecto:
+**Crear archivo `backend/.env`:**
 
 ```env
 PORT=3030
-URI_DB=mongodb://localhost:27017/nutricion_db
-# o para MongoDB Atlas:
-# URI_DB=mongodb+srv://usuario:password@cluster.mongodb.net/nutricion_db
+URI_DB=mongodb+srv://usuario:password@cluster.mongodb.net/nutricion_db?retryWrites=true&w=majority
+JWT_SECRET=tu_secreto_generado_con_node
 ```
 
-4. **Iniciar el servidor**
+**⚠️ Importante:**
+
+- Reemplaza `usuario:password` con tus credenciales de MongoDB Atlas
+- Genera un JWT_SECRET seguro con: `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"`
+
+**Iniciar el backend:**
 
 ```bash
 npm start
 ```
 
-El servidor se levantará en `http://localhost:3030`
+El servidor estará disponible en: `http://localhost:3030`
 
-## 📚 Documentación de la API
+### 3️⃣ Configurar el Frontend
 
-### Base URL
-
-```
-http://localhost:3030/api
-```
-
-### 🔐 Endpoints de Usuarios
-
-| Método | Endpoint     | Descripción                | Body                                                          |
-| ------ | ------------ | -------------------------- | ------------------------------------------------------------- |
-| GET    | `/users`     | Obtener todos los usuarios | -                                                             |
-| GET    | `/users/:id` | Obtener usuario por ID     | -                                                             |
-| POST   | `/users`     | Crear nuevo usuario        | `{"name": "string", "email": "string", "password": "string"}` |
-| PUT    | `/users/:id` | Actualizar usuario         | `{"name": "string", "email": "string", "password": "string"}` |
-| DELETE | `/users/:id` | Eliminar usuario           | -                                                             |
-
-**⚠️ Importante sobre contraseñas:**
-
-- Las contraseñas se almacenan hasheadas con bcrypt
-- Longitud mínima: 6 caracteres
-- Las contraseñas nunca se devuelven en las respuestas de la API
-
-### 🥗 Endpoints de Alimentos
-
-| Método | Endpoint            | Descripción                       | Parámetros        |
-| ------ | ------------------- | --------------------------------- | ----------------- |
-| GET    | `/alimentos`        | Obtener todos los alimentos       | -                 |
-| GET    | `/alimentos/:id`    | Obtener alimento por ID           | -                 |
-| POST   | `/alimentos`        | Crear nuevo alimento              | Ver body abajo    |
-| PUT    | `/alimentos/:id`    | Actualizar alimento               | Ver body abajo    |
-| DELETE | `/alimentos/:id`    | Eliminar alimento                 | -                 |
-| GET    | `/alimentos/search` | Buscar por nombre                 | `?nombre=texto`   |
-| GET    | `/alimentos/filter` | Filtrar por valores nutricionales | Ver filtros abajo |
-
-**Body para crear/actualizar alimentos:**
-
-```json
-{
-	"nombre": "Pollo a la plancha",
-	"calorias": 165,
-	"proteinas": 31,
-	"carbohidratos": 0,
-	"grasas": 3.6,
-	"descripcion": "Pechuga de pollo sin piel cocinada a la plancha"
-}
-```
-
-**Filtros disponibles:**
-
-- `minCalorias` / `maxCalorias`
-- `minProteinas` / `maxProteinas`
-- `minCarbohidratos` / `maxCarbohidratos`
-- `minGrasas` / `maxGrasas`
-
-**Ejemplo de filtrado:**
-
-```
-GET /api/alimentos/filter?minProteinas=20&maxCalorias=300
-```
-
-### 📂 Endpoints de Categorías
-
-| Método | Endpoint          | Descripción                  | Body                                            |
-| ------ | ----------------- | ---------------------------- | ----------------------------------------------- |
-| GET    | `/categorias`     | Obtener todas las categorías | -                                               |
-| GET    | `/categorias/:id` | Obtener categoría por ID     | -                                               |
-| POST   | `/categorias`     | Crear nueva categoría        | `{"nombre": "string", "descripcion": "string"}` |
-| PUT    | `/categorias/:id` | Actualizar categoría         | `{"nombre": "string", "descripcion": "string"}` |
-| DELETE | `/categorias/:id` | Eliminar categoría           | -                                               |
-
-## 🗃️ Estructura de la Base de Datos
-
-### Colección Users
-
-```javascript
-{
-  _id: ObjectId,
-  name: String,
-  email: String (unique),
-  password: String (hashed),
-  createdAt: Date,
-  updatedAt: Date
-}
-```
-
-### Colección Alimentos
-
-```javascript
-{
-  _id: ObjectId,
-  nombre: String (unique),
-  calorias: Number,
-  proteinas: Number,
-  carbohidratos: Number,
-  grasas: Number,
-  descripcion: String,
-  createdAt: Date,
-  updatedAt: Date
-}
-```
-
-### Colección Categorias
-
-```javascript
-{
-  _id: ObjectId,
-  nombre: String (unique),
-  descripcion: String,
-  createdAt: Date,
-  updatedAt: Date
-}
-```
-
-## 📖 Ejemplos de Uso
-
-### Crear un usuario
+En una **nueva terminal**:
 
 ```bash
-curl -X POST http://localhost:3030/api/users \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "María García",
-    "email": "maria@example.com",
-    "password": "miPassword123"
-  }'
+# Ir a la carpeta del frontend
+cd frontend
+
+# Instalar dependencias
+npm install
+
+# Crear archivo .env
 ```
 
-### Buscar alimentos por nombre
+**Crear archivo `frontend/.env`:**
+
+```env
+REACT_APP_API_URL=http://localhost:3030/api
+```
+
+**Iniciar el frontend:**
 
 ```bash
-curl "http://localhost:3030/api/alimentos/search?nombre=pollo"
+npm start
 ```
 
-### Filtrar alimentos altos en proteína
+El frontend estará disponible en: `http://localhost:3000`
 
-```bash
-curl "http://localhost:3030/api/alimentos/filter?minProteinas=25"
-```
+---
 
-## 🔧 Scripts Disponibles
-
-- `npm start` - Inicia el servidor con watch mode
-- `npm test` - Ejecuta las pruebas (por implementar)
-
-## 🌐 Documentación Visual
-
-La API incluye una documentación visual accesible en:
+## 📁 Estructura del Proyecto
 
 ```
-http://localhost:3030
+aplicaciones-hibridas-parcial01/
+│
+├── backend/                      # API REST
+│   ├── config/
+│   │   └── db.js                # Configuración de MongoDB
+│   ├── controllers/             # Lógica de negocio
+│   │   ├── authController.js    # Login, Register
+│   │   ├── userController.js    # CRUD Usuarios
+│   │   ├── alimentoController.js
+│   │   └── categoriaController.js
+│   ├── middlewares/             # Middlewares personalizados
+│   │   ├── authMiddleware.js    # Verificar JWT
+│   │   └── validationMiddleware.js
+│   ├── models/                  # Esquemas de MongoDB
+│   │   ├── userModel.js
+│   │   ├── alimentoModel.js
+│   │   └── categoriaModel.js
+│   ├── routes/                  # Definición de rutas
+│   │   ├── authRouter.js
+│   │   ├── userRouter.js
+│   │   ├── alimentoRouter.js
+│   │   ├── categoriaRouter.js
+│   │   └── index.js
+│   ├── services/                # Servicios auxiliares
+│   │   └── jwtService.js        # Generación/verificación JWT
+│   ├── .env                     # Variables de entorno
+│   ├── index.js                 # Punto de entrada
+│   └── package.json
+│
+├── frontend/                     # Aplicación React
+│   ├── public/
+│   ├── src/
+│   │   ├── api/                 # Lógica de comunicación con API
+│   │   │   ├── axiosConfig.js
+│   │   │   ├── authApi.js
+│   │   │   ├── alimentosApi.js
+│   │   │   └── categoriasApi.js
+│   │   ├── components/          # Componentes React
+│   │   │   ├── layout/
+│   │   │   │   ├── Navbar.jsx
+│   │   │   │   └── Footer.jsx
+│   │   │   └── common/
+│   │   │       └── LoadingSpinner.jsx
+│   │   ├── context/             # Context API
+│   │   │   └── AuthContext.jsx
+│   │   ├── pages/               # Páginas principales
+│   │   │   ├── Home.jsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
+│   │   │   ├── Alimentos.jsx
+│   │   │   ├── Categorias.jsx
+│   │   │   └── Profile.jsx
+│   │   ├── App.jsx              # Componente principal + Rutas
+│   │   ├── index.js
+│   │   └── App.css
+│   ├── .env
+│   └── package.json
+│
+└── README.md                     # Este archivo
 ```
 
-## 🔒 Seguridad Implementada
+---
+
+## 🔐 Funcionalidades Implementadas
+
+### Autenticación (JWT)
+
+- ✅ Registro de usuarios con contraseñas encriptadas (bcrypt)
+- ✅ Login con generación de token JWT
+- ✅ Rutas protegidas que requieren autenticación
+- ✅ Verificación automática de token al iniciar la app
+- ✅ Logout con limpieza de sesión
+
+### Gestión de Alimentos
+
+- ✅ Crear alimentos con datos nutricionales (calorías, proteínas, carbohidratos, grasas)
+- ✅ Listar todos los alimentos
+- ✅ Editar información de alimentos existentes
+- ✅ Eliminar alimentos
+- ✅ Buscar alimentos por nombre
+- ✅ Filtrar alimentos por valores nutricionales
+
+### Gestión de Categorías
+
+- ✅ Crear categorías para organizar alimentos
+- ✅ Listar todas las categorías
+- ✅ Editar categorías
+- ✅ Eliminar categorías
+
+### Validaciones
+
+- ✅ Validación de datos en el backend (middlewares)
+- ✅ Validación de formularios en el frontend
+- ✅ Mensajes de error descriptivos
+- ✅ Manejo de errores de red y autenticación
+
+---
+
+## 🌐 Endpoints de la API
+
+### Autenticación (Públicos)
+
+```
+POST   /api/auth/register    - Registrar nuevo usuario
+POST   /api/auth/login       - Iniciar sesión
+GET    /api/auth/profile     - Obtener perfil (requiere token)
+GET    /api/auth/verify      - Verificar token válido
+```
+
+### Alimentos (Protegidos - Requieren JWT)
+
+```
+GET    /api/alimentos                    - Listar todos
+GET    /api/alimentos/:id                - Obtener por ID
+POST   /api/alimentos                    - Crear alimento
+PUT    /api/alimentos/:id                - Actualizar alimento
+DELETE /api/alimentos/:id                - Eliminar alimento
+GET    /api/alimentos/search?nombre=X    - Buscar por nombre
+GET    /api/alimentos/filter?minProteinas=20  - Filtrar
+```
+
+### Categorías (Protegidas - Requieren JWT)
+
+```
+GET    /api/categorias        - Listar todas
+GET    /api/categorias/:id    - Obtener por ID
+POST   /api/categorias        - Crear categoría
+PUT    /api/categorias/:id    - Actualizar categoría
+DELETE /api/categorias/:id    - Eliminar categoría
+```
+
+### Usuarios (Protegidos - Requieren JWT)
+
+```
+GET    /api/users             - Listar todos los usuarios
+GET    /api/users/:id         - Obtener usuario por ID
+PUT    /api/users/:id         - Actualizar usuario
+DELETE /api/users/:id         - Eliminar usuario
+```
+
+---
+
+## 🧪 Cómo Probar la Aplicación
+
+### Flujo Completo de Usuario
+
+1. **Registro**
+
+   - Accede a `http://localhost:3000/register`
+   - Completa el formulario con nombre, email y contraseña
+   - Al registrarte, se te redirigirá automáticamente a la página de alimentos
+
+2. **Crear Alimentos**
+
+   - Click en "Nuevo Alimento"
+   - Completa la información nutricional
+   - Guarda el alimento
+
+3. **Crear Categorías**
+
+   - Ve a la sección "Categorías"
+   - Crea categorías como "Proteínas", "Carbohidratos", etc.
+
+4. **Buscar y Filtrar**
+
+   - Usa la búsqueda para encontrar alimentos específicos
+   - Filtra por valores nutricionales (ej: alimentos con >20g de proteínas)
+
+5. **Ver Perfil**
+   - Accede a tu perfil para ver tu información
+
+---
+
+## 🛡️ Seguridad Implementada
 
 - ✅ Contraseñas hasheadas con bcrypt (10 salt rounds)
-- ✅ Validación de datos de entrada
-- ✅ Protección contra duplicados (email y nombres únicos)
-- ✅ Exclusión de contraseñas en respuestas
-- ✅ Manejo seguro de errores
+- ✅ Tokens JWT con expiración de 7 días
+- ✅ Validación de datos en backend y frontend
+- ✅ Protección contra inyecciones SQL (uso de Mongoose)
+- ✅ CORS configurado para permitir solo origen del frontend
+- ✅ Variables de entorno para secretos (no se suben a Git)
+- ✅ Interceptores de Axios para manejo automático de tokens expirados
 
-## 🚧 Próximas Mejoras
-
-- [ ] Sistema de autenticación JWT
-- [ ] Middleware de autorización
-- [ ] Relación entre alimentos y categorías
-- [ ] Paginación en listados
-- [ ] Validaciones más robustas
-- [ ] Tests unitarios e integración
-- [ ] Rate limiting
-- [ ] Logging avanzado
-
-## 📄 Licencia
-
-ISC
+---
 
 ## 🔗 Enlaces
 
-- **Repositorio:** [https://github.com/elias-marolla/aplicaciones-hibridas-parcial01](https://github.com/elias-marolla/aplicaciones-hibridas-parcial01)
-- **Issues:** [https://github.com/elias-marolla/aplicaciones-hibridas-parcial01/issues](https://github.com/elias-marolla/aplicaciones-hibridas-parcial01/issues)
+- **Repositorio:** [GitHub](https://github.com/elias-marolla/aplicaciones-hibridas-parcial01)
 
-**Desarrollado con ❤️ por el equipo de Aplicaciones Híbridas**
+---
+
+**Desarrollado por el equipo de Aplicaciones Híbridas 2**
+
+_Asensio Diego • Diaz Diaz Sol • Marolla Elias_

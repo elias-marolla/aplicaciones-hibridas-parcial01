@@ -1,0 +1,22 @@
+.footer {
+	background: #2c3e50;
+	color: white;
+	padding: 30px 20px;
+	margin-top: 60px;
+}
+
+.footer-content {
+	max-width: 1200px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.footer-content p {
+	margin: 10px 0;
+	font-size: 14px;
+}
+
+.footer-team {
+	color: #ecf0f1;
+	font-weight: 500;
+}
