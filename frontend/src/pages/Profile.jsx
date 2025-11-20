@@ -48,17 +48,6 @@ const Profile = () => {
 						</div>
 					)}
 				</div>
-
-				<div className='profile-stats'>
-					<div className='stat-card'>
-						<span className='stat-number'>0</span>
-						<span className='stat-label'>Alimentos Creados</span>
-					</div>
-					<div className='stat-card'>
-						<span className='stat-number'>0</span>
-						<span className='stat-label'>Categorías Creadas</span>
-					</div>
-				</div>
 			</div>
 		</div>
 	);
