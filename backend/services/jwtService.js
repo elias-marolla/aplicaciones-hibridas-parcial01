@@ -17,7 +17,6 @@ export const verifyToken = (token) => {
   }
 };
 
-// Decodificar token sin verificar (útil para debugging)
 export const decodeToken = (token) => {
   return jwt.decode(token);
 };

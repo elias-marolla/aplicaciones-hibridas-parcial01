@@ -4,7 +4,6 @@ import UserModel from "../models/userModel.js";
 // Middleware para verificar autenticación
 export const authenticate = async (req, res, next) => {
   try {
-    // Obtener token del header Authorization
     const authHeader = req.headers.authorization;
     
     if (!authHeader || !authHeader.startsWith('Bearer ')) {

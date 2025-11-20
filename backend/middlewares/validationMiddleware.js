@@ -106,7 +106,6 @@ export const validateCategoria = (req, res, next) => {
   next();
 };
 
-// Función auxiliar para validar email
 const isValidEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
